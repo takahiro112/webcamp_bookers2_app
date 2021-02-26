@@ -1,0 +1,61 @@
+
+<div class="container">
+<div class="row">
+<div class= "col-md-3">
+<p id="notice">
+  <%= notice %>
+</p>
+
+<% if @book.errors.any? %>
+    <p>error!!</p>
+    <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+<% end %>
+
+
+<h2>User info</h2>
+
+   <%= attachment_image_tag @book.user, :profile_image, :fill, 50, 50, fallback: "no_image.jpg" ,format: 'no_image.jpg' %>
+   <h5>name</h5>
+   <%= @book.user.name %>
+   <h5>introduction</h5>
+   <%= @book.user.introduction %>
+
+   <i class="fas fa-user-cog"></i>
+   <%= link_to"editing info",edit_user_path(@book.user.id) %>
+
+
+   <h2>New book</h2>
+   <%= form_with model:@book_new, local:true do |f| %>
+   <h3>Title</h3>
+   <%= f.text_field :title %>
+   <h3>Body</h3>
+   <%= f.text_area :body %>
+   <%= f.submit "Create Book" %>
+   <% end %>
+</div>
+
+<div class="col-md-8 offset-md-1">
+<h2>Book detail</h2>
+  <table class='table'>
+    <tr>
+      <td>
+      <%= link_to user_path(@book.user.id) do %>
+      <%= attachment_image_tag @book.user, :profile_image, :fill, 20, 20, fallback: "no_image.jpg",size:'20x20',format: 'no_image.jpg' %>
+      <nav><%= @book.user.name %></nav>
+      <% end %>
+      </td>
+      <td><%= link_to @book.title %></td>
+      <td><%= @book.body %></td>
+      <% if @book.user.id == current_user.id %>
+      <td><%=link_to"Edit", edit_book_path(@book.id) %></td>
+      <td><%=link_to"Destroy", book_path(@book.id),method: :delete %> </td>
+      <% end %>
+    </tr>
+  </table>
+</div>
+</div>
+</div>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookers2</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Bookers</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    <% if user_signed_in? %>
+       <table>
+         <tr class="navbar-nav">
+           <th class="nav-item"><i class="fas fa-home"style="color:white;"></i><%= link_to 'Home', user_path(current_user.id) %></th>
+           <th class="nav-item"><i class="fas fa-users"style="color:white;"></i><%= link_to "Users","/users" %></th>
+           <th class="nav-item"><i class="fas fa-book-open"style="color:white;"></i><%= link_to 'Books', books_path %></th>
+           <th class="nav-item"><i class="fas fa-sign-out-alt"style="color:white;"></i><%= link_to 'logout', destroy_user_session_path, method: :delete, notice:"successfully logout" %></th>
+         </tr>
+       </table>
+    </header>
+    <% else %>
+    <header>
+       <table>
+         <tr class="navbar-nav">
+           <th class="nav-item"><i class="fas fa-home"style="color:white;"><%= link_to 'Home', root_path %></th>
+           <th class="nav-item"><i class="fas fa-link"style="color:white;"></i><%= link_to 'About', home_about_path %></th>
+           <th class="nav-item"><i class="fas fa-user-plus"style="color:white;"></i><%= link_to 'sign up', new_user_registration_path %></th>
+           <th class="nav-item"><i class="fas fa-sign-in-alt"style="color:white;"></i><%= link_to 'login', new_user_session_path %></th>
+         </tr>
+       </table>
+    <% end %>
+    <%= yield %>
+    </div>
+    </nav>
+    </header>
+  </body>
+</html>
